@@ -11,16 +11,18 @@ if __name__ == '__main__':
     # if you supply it, then true
     args = parser.parse_args()
 
-    env = gym.make('LunarLander-v2')
+    env = gym.make('CartPole-v1')
     combined = args.cer
     buffer_size = args.bs
+    input_dim = env.observation_space.shape
+    actions = env.action_space.n
 
-    agent = Agent(gamma=0.99, epsilon=0.1, batch_size=64, n_actions=4,
-                  eps_end=0.1, input_dims=[8], lr=0.001,
+    agent = Agent(gamma=0.99, epsilon=0.1, batch_size=64, n_actions=actions,
+                  eps_end=0.1, input_dims=input_dim, lr=0.001,
                   max_mem_size=buffer_size, combined=combined)
 
     scores = []
-    n_games = 500
+    n_games = 5000
     for i in range(n_games):
         score = 0
         done = False
